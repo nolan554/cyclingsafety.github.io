@@ -20,7 +20,201 @@
   </header>
   <main class="viz-container">
     <section class="viz-card">
-	    <p>Test</p>
+      <div class="boulder-chart">
+        <h2 class="boulder-chart__title">The Intersection Problem &mdash; Cycling Crashes by Location in Boulder</h2>
+        <p class="boulder-chart__source">Source: City of Boulder Crash Data Dashboard (2017&ndash;2024)</p>
+        <div class="boulder-chart__container">
+          <svg id="boulder-bar-chart" role="img" aria-label="Bar chart showing the frequency of Boulder cycling crashes by location"></svg>
+        </div>
+        <div id="boulder-chart-tooltip" class="boulder-chart__tooltip" role="presentation"></div>
+      </div>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        .boulder-chart {
+          background-color: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+          font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+          margin: 0 auto;
+          max-width: 720px;
+          padding: 1.75rem;
+          position: relative;
+        }
+        .boulder-chart__title {
+          color: #1f2937;
+          font-size: 1.75rem;
+          font-weight: 700;
+          line-height: 1.2;
+          margin: 0;
+        }
+        .boulder-chart__source {
+          color: #6b7280;
+          font-size: 0.95rem;
+          margin: 0.5rem 0 0;
+        }
+        .boulder-chart__container {
+          margin-top: 1.75rem;
+          width: 100%;
+        }
+        #boulder-bar-chart {
+          height: 400px;
+          width: 100%;
+        }
+        .axis-label,
+        .data-label {
+          fill: #334155;
+          font-size: 0.8rem;
+        }
+        .axis path,
+        .axis line {
+          stroke: #cbd5e1;
+        }
+        .y-axis .tick text {
+          fill: #334155;
+          font-weight: 500;
+        }
+        .x-axis .tick text {
+          fill: #64748b;
+        }
+        .bar-default {
+          fill: #94a3b8;
+        }
+        .bar-highlight {
+          fill: #2563eb;
+        }
+        .bar.is-hovered {
+          opacity: 0.82;
+        }
+        .boulder-chart__tooltip {
+          background-color: #1e293b;
+          border-radius: 6px;
+          box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+          color: #ffffff;
+          font-size: 0.85rem;
+          opacity: 0;
+          padding: 0.6rem 0.85rem;
+          pointer-events: none;
+          position: fixed;
+          transition: opacity 0.2s ease;
+          z-index: 1000;
+        }
+      </style>
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      <script>
+        (function () {
+          const data = [
+            { location: "at intersection", frequency: 414 },
+            { location: "driveway access related", frequency: 127 },
+            { location: "non-intersection", frequency: 105 },
+            { location: "intersection related", frequency: 67 },
+            { location: "parking lot", frequency: 30 },
+            { location: "other/minor road descriptions", frequency: 14 },
+            { location: "mid-block crosswalk", frequency: 9 },
+            { location: "share-use path or trail", frequency: 8 }
+          ];
+
+          const container = d3.select(".boulder-chart__container");
+          const svg = d3.select("#boulder-bar-chart");
+          const tooltip = d3.select("#boulder-chart-tooltip");
+          const margin = { top: 24, right: 48, bottom: 56, left: 220 };
+          const totalHeight = 400;
+          const innerHeight = totalHeight - margin.top - margin.bottom;
+
+          function render() {
+            const containerWidth = Math.max(container.node().getBoundingClientRect().width, 320);
+            const innerWidth = containerWidth - margin.left - margin.right;
+
+            svg.attr("width", containerWidth);
+            svg.attr("height", totalHeight);
+            svg.selectAll("*").remove();
+
+            const chartArea = svg
+              .append("g")
+              .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const xScale = d3.scaleLinear()
+              .domain([0, d3.max(data, d => d.frequency) * 1.05])
+              .range([0, innerWidth]);
+
+            const yScale = d3.scaleBand()
+              .domain(data.map(d => d.location))
+              .range([0, innerHeight])
+              .padding(0.2);
+
+            chartArea
+              .append("g")
+              .attr("class", "axis y-axis")
+              .call(d3.axisLeft(yScale).tickSize(0).tickPadding(12))
+              .call(g => g.select(".domain").remove());
+
+            chartArea
+              .append("g")
+              .attr("class", "axis x-axis")
+              .attr("transform", `translate(0,${innerHeight})`)
+              .call(d3.axisBottom(xScale).ticks(5).tickSizeOuter(0));
+
+            chartArea
+              .append("text")
+              .attr("class", "axis-label")
+              .attr("text-anchor", "middle")
+              .attr("x", innerWidth / 2)
+              .attr("y", innerHeight + margin.bottom - 18)
+              .text("Frequency of Crashes");
+
+            const bars = chartArea
+              .selectAll(".bar")
+              .data(data)
+              .enter()
+              .append("rect")
+              .attr("class", d => `bar ${d.location === "at intersection" ? "bar-highlight" : "bar-default"}`)
+              .attr("x", 0)
+              .attr("y", d => yScale(d.location))
+              .attr("height", yScale.bandwidth())
+              .attr("width", 0);
+
+            bars
+              .transition()
+              .duration(800)
+              .delay((_, i) => i * 50)
+              .attr("width", d => xScale(d.frequency));
+
+            chartArea
+              .selectAll(".data-label")
+              .data(data)
+              .enter()
+              .append("text")
+              .attr("class", "data-label")
+              .attr("x", d => xScale(d.frequency) + 10)
+              .attr("y", d => yScale(d.location) + yScale.bandwidth() / 2)
+              .attr("dy", "0.35em")
+              .attr("opacity", 0)
+              .text(d => d.frequency)
+              .transition()
+              .duration(800)
+              .delay((_, i) => i * 50 + 200)
+              .attr("opacity", 1);
+
+            bars
+              .on("mouseover", function () {
+                d3.select(this).classed("is-hovered", true);
+                tooltip.style("opacity", 1);
+              })
+              .on("mousemove", function (event, d) {
+                tooltip
+                  .html(`<strong>${d.location}</strong><br>Frequency: ${d.frequency}`)
+                  .style("left", `${event.clientX + 16}px`)
+                  .style("top", `${event.clientY - 10}px`);
+              })
+              .on("mouseleave", function () {
+                d3.select(this).classed("is-hovered", false);
+                tooltip.style("opacity", 0);
+              });
+          }
+
+          render();
+          window.addEventListener("resize", render);
+        })();
+      </script>
     </section>
   </main>
 </body>
