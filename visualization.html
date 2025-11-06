@@ -20,41 +20,59 @@
   </header>
   <main class="viz-container">
     <section class="viz-card">
-      <div class="boulder-chart">
-        <h2 class="boulder-chart__title">The Intersection Problem &mdash; Cycling Crashes by Location in Boulder</h2>
-        <p class="boulder-chart__source">Source: City of Boulder Crash Data Dashboard (2017&ndash;2024)</p>
-        <div class="boulder-chart__container">
-          <svg id="boulder-bar-chart" role="img" aria-label="Bar chart showing the frequency of Boulder cycling crashes by location"></svg>
+      <div class="boulder-dashboard" aria-labelledby="boulder-overview-heading">
+        <h3 id="boulder-overview-heading" class="boulder-dashboard__title">Boulder Bicycle Crash Snapshot</h3>
+        <div class="boulder-chart boulder-chart--embedded">
+          <h4 class="boulder-mini-card__title">Intersection crash hotspots</h4>
+	  <p class="boulder-mini-card__meta">Intersections account for 53.5% of the 774 bicycle crashes recorded since 2017.</p>
+          <div class="boulder-chart__container">
+            <svg id="boulder-bar-chart" role="img" aria-label="Bar chart showing the frequency of Boulder cycling crashes by location"></svg>
+          </div>
+          <div id="boulder-chart-tooltip" class="boulder-chart__tooltip" role="presentation"></div>
         </div>
-        <div id="boulder-chart-tooltip" class="boulder-chart__tooltip" role="presentation"></div>
+        <div class="boulder-dashboard__grid">
+          <article class="boulder-mini-card">
+            <h4 class="boulder-mini-card__title">Total crashes vs. serious injuries</h4>
+            <p class="boulder-mini-card__meta">Shows yearly bicycle-involved crashes and the subset resulting in serious injuries.</p>
+            <svg id="boulder-year-trend" aria-label="Line chart comparing total bicycle crashes and serious injuries by year"></svg>
+          </article>
+          <article class="boulder-mini-card">
+            <h4 class="boulder-mini-card__title">Crash severity breakdown</h4>
+            <p class="boulder-mini-card__meta">Severity ratings assigned at the scene, ordered from most to least serious.</p>
+            <svg id="boulder-severity-breakdown" aria-label="Horizontal bar chart showing bicycle crash counts by severity"></svg>
+          </article>
+          <article class="boulder-mini-card">
+            <h4 class="boulder-mini-card__title">Crashes by month</h4>
+            <p class="boulder-mini-card__meta">Shifts through the riding season, summed across the entire study period.</p>
+            <svg id="boulder-monthly-trend" aria-label="Column chart showing bicycle crash volume by month"></svg>
+          </article>
+        </div>
+        <p class="boulder-dashboard__footnote">Data source: City of Boulder Crash Dataset (2017&ndash;2024). Bicycle-involved crashes only.</p>
       </div>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         .boulder-chart {
-          background-color: #ffffff;
-          border-radius: 12px;
-          box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+          background-color: transparent;
+          border-radius: 0;
+          box-shadow: none;
           font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
           margin: 0 auto;
-          max-width: 720px;
-          padding: 1.75rem;
+          max-width: 100%;
+          padding: 0;
           position: relative;
         }
-        .boulder-chart__title {
-          color: #1f2937;
-          font-size: 1.75rem;
-          font-weight: 700;
-          line-height: 1.2;
-          margin: 0;
-        }
-        .boulder-chart__source {
-          color: #6b7280;
-          font-size: 0.95rem;
-          margin: 0.5rem 0 0;
+        .boulder-chart--embedded {
+          margin-top: 2rem;
         }
         .boulder-chart__container {
           margin-top: 1.75rem;
           width: 100%;
+        }
+        .boulder-chart__insight {
+          color: #4b5563;
+          font-size: 0.9rem;
+          line-height: 1.5;
+          margin-top: 1rem;
         }
         #boulder-bar-chart {
           height: 400px;
@@ -98,25 +116,132 @@
           transition: opacity 0.2s ease;
           z-index: 1000;
         }
+        .boulder-dashboard {
+          font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+          margin: 3rem auto 0;
+          width: min(960px, 100%);
+        }
+        .boulder-dashboard__title {
+          color: #1f2937;
+          font-size: 1.45rem;
+          font-weight: 700;
+          margin: 0;
+        }
+        .boulder-dashboard__grid {
+          display: flex;
+          flex-direction: column;
+          gap: 2.5rem;
+          margin-top: 2.5rem;
+          align-items: stretch;
+        }
+        .boulder-mini-card {
+          background-color: transparent;
+          border-radius: 0;
+          box-shadow: none;
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          padding: 0;
+        }
+        .boulder-mini-card__title {
+          color: #1f2937;
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin: 0 0 0.25rem;
+        }
+        .boulder-mini-card__meta {
+          color: #6b7280;
+          font-size: 0.85rem;
+          line-height: 1.5;
+          margin: 0 0 0.75rem;
+        }
+        .boulder-mini-card svg {
+          display: block;
+          margin-top: 1.25rem;
+          width: 100%;
+          overflow: visible;
+        }
+        .boulder-dashboard__footnote {
+          color: #6b7280;
+          font-size: 0.8rem;
+          margin-top: 1.5rem;
+          text-align: right;
+        }
+        .boulder-line {
+          fill: none;
+          stroke-linejoin: round;
+          stroke-linecap: round;
+          stroke-width: 2.5;
+        }
+        .boulder-line--crashes {
+          stroke: #2563eb;
+        }
+        .boulder-line--serious {
+          stroke: #94a3b8;
+        }
+        .boulder-dot {
+          stroke: #ffffff;
+          stroke-width: 1.5;
+        }
+        .boulder-dot--crashes {
+          fill: #2563eb;
+        }
+        .boulder-dot--serious {
+          fill: #94a3b8;
+        }
+        .boulder-legend text {
+          fill: #475569;
+          font-size: 0.78rem;
+        }
+        .boulder-gridline {
+          stroke: #e2e8f0;
+          stroke-width: 1;
+        }
+        .boulder-mini-bar {
+          fill: #2563eb;
+        }
+        .boulder-mini-bar--muted {
+          fill: #94a3b8;
+        }
+        .boulder-month-bar {
+          fill: #94a3b8;
+        }
+        .boulder-month-bar--highlight {
+          fill: #2563eb;
+        }
+        .boulder-baseline {
+          stroke: #cbd5e1;
+          stroke-width: 1;
+        }
+        .boulder-axis-label {
+          fill: #475569;
+          font-size: 0.78rem;
+        }
       </style>
       <script src="https://d3js.org/d3.v7.min.js"></script>
       <script>
         (function () {
           const data = [
-            { location: "at intersection", frequency: 414 },
-            { location: "driveway access related", frequency: 127 },
-            { location: "non-intersection", frequency: 105 },
-            { location: "intersection related", frequency: 67 },
-            { location: "parking lot", frequency: 30 },
-            { location: "other/minor road descriptions", frequency: 14 },
-            { location: "mid-block crosswalk", frequency: 9 },
-            { location: "share-use path or trail", frequency: 8 }
+            { axisLabel: "Intersection", description: "Crash occurred at an intersection", frequency: 414, highlight: true },
+            { axisLabel: "Driveway", description: "Driveway access related", frequency: 127 },
+            { axisLabel: "Non-intersection", description: "Crash away from an intersection", frequency: 105 },
+            { axisLabel: "Intersection related", description: "Approaching or leaving an intersection", frequency: 67 },
+            { axisLabel: "Parking lot", description: "Crash inside a parking lot", frequency: 30 },
+            { axisLabel: "Minor road", description: "Minor or other road description", frequency: 14 },
+            { axisLabel: "Mid-block crossing", description: "Crash in a mid-block crosswalk", frequency: 9 },
+            { axisLabel: "Shared path", description: "Shared-use path or trail", frequency: 8 }
           ];
+
+          const formatNumber = d3.format(",");
+          const totalCrashes = d3.sum(data, d => d.frequency);
+          const primaryShare = data[0].frequency / totalCrashes;
+          d3.select("#intersection-insight")
+            .text(`Intersections account for ${d3.format(".1f")(primaryShare * 100)}% of the ${formatNumber(totalCrashes)} bicycle crashes recorded since 2017.`);
 
           const container = d3.select(".boulder-chart__container");
           const svg = d3.select("#boulder-bar-chart");
           const tooltip = d3.select("#boulder-chart-tooltip");
-          const margin = { top: 24, right: 48, bottom: 56, left: 220 };
+          const margin = { top: 24, right: 60, bottom: 56, left: 140 };
           const totalHeight = 400;
           const innerHeight = totalHeight - margin.top - margin.bottom;
 
@@ -132,12 +257,19 @@
               .append("g")
               .attr("transform", `translate(${margin.left},${margin.top})`);
 
+            chartArea.append("line")
+              .attr("class", "boulder-baseline")
+              .attr("x1", 0)
+              .attr("x2", innerWidth)
+              .attr("y1", innerHeight)
+              .attr("y2", innerHeight);
+
             const xScale = d3.scaleLinear()
               .domain([0, d3.max(data, d => d.frequency) * 1.05])
               .range([0, innerWidth]);
 
             const yScale = d3.scaleBand()
-              .domain(data.map(d => d.location))
+              .domain(data.map(d => d.axisLabel))
               .range([0, innerHeight])
               .padding(0.2);
 
@@ -166,9 +298,9 @@
               .data(data)
               .enter()
               .append("rect")
-              .attr("class", d => `bar ${d.location === "at intersection" ? "bar-highlight" : "bar-default"}`)
+              .attr("class", d => `bar ${d.highlight ? "bar-highlight" : "bar-default"}`)
               .attr("x", 0)
-              .attr("y", d => yScale(d.location))
+              .attr("y", d => yScale(d.axisLabel))
               .attr("height", yScale.bandwidth())
               .attr("width", 0);
 
@@ -185,10 +317,10 @@
               .append("text")
               .attr("class", "data-label")
               .attr("x", d => xScale(d.frequency) + 10)
-              .attr("y", d => yScale(d.location) + yScale.bandwidth() / 2)
+              .attr("y", d => yScale(d.axisLabel) + yScale.bandwidth() / 2)
               .attr("dy", "0.35em")
               .attr("opacity", 0)
-              .text(d => d.frequency)
+              .text(d => formatNumber(d.frequency))
               .transition()
               .duration(800)
               .delay((_, i) => i * 50 + 200)
@@ -201,7 +333,7 @@
               })
               .on("mousemove", function (event, d) {
                 tooltip
-                  .html(`<strong>${d.location}</strong><br>Frequency: ${d.frequency}`)
+                  .html(`<strong>${d.axisLabel}</strong><br>${d.description}<br>${formatNumber(d.frequency)} crashes`)
                   .style("left", `${event.clientX + 16}px`)
                   .style("top", `${event.clientY - 10}px`);
               })
@@ -213,6 +345,394 @@
 
           render();
           window.addEventListener("resize", render);
+        })();
+
+        (function () {
+          const svgs = {
+            year: d3.select("#boulder-year-trend"),
+            severity: d3.select("#boulder-severity-breakdown"),
+            month: d3.select("#boulder-monthly-trend")
+          };
+          const tooltip = d3.select("#boulder-chart-tooltip");
+          const numberFormatter = d3.format(",");
+          const showTooltip = (event, html) => {
+            tooltip
+              .html(html)
+              .style("opacity", 1)
+              .style("left", `${event.clientX + 16}px`)
+              .style("top", `${event.clientY - 10}px`);
+          };
+          const hideTooltip = () => {
+            tooltip.style("opacity", 0);
+          };
+          const yearSeries = [
+            { year: 2017, crashes: 106, serious: 14 },
+            { year: 2018, crashes: 153, serious: 21 },
+            { year: 2019, crashes: 145, serious: 27 },
+            { year: 2020, crashes: 73, serious: 11 },
+            { year: 2021, crashes: 71, serious: 10 },
+            { year: 2022, crashes: 64, serious: 11 },
+            { year: 2023, crashes: 102, serious: 23 },
+            { year: 2024, crashes: 68, serious: 10 }
+          ];
+          const severityData = [
+            { key: "FATAL", label: "Fatal", axisLabel: "Fatal", count: 4 },
+            { key: "INCAPACITATING INJURY", label: "Severe injury", axisLabel: "Severe inj.", count: 124 },
+            { key: "NOPN-INCAPACITATING INJURY", label: "Non-incapacitating injury", axisLabel: "Non-incap inj.", count: 323 },
+            { key: "POSSIBLY INJURY", label: "Possible injury", axisLabel: "Possible inj.", count: 194 },
+            { key: "PROPERTY DAMAGE ONLY", label: "Property damage only", axisLabel: "Prop. damage", count: 137 }
+          ];
+          const monthlyData = [
+            { monthNumber: 1, label: "Jan", count: 36 },
+            { monthNumber: 2, label: "Feb", count: 28 },
+            { monthNumber: 3, label: "Mar", count: 38 },
+            { monthNumber: 4, label: "Apr", count: 49 },
+            { monthNumber: 5, label: "May", count: 62 },
+            { monthNumber: 6, label: "Jun", count: 68 },
+            { monthNumber: 7, label: "Jul", count: 55 },
+            { monthNumber: 8, label: "Aug", count: 121 },
+            { monthNumber: 9, label: "Sep", count: 115 },
+            { monthNumber: 10, label: "Oct", count: 86 },
+            { monthNumber: 11, label: "Nov", count: 74 },
+            { monthNumber: 12, label: "Dec", count: 50 }
+          ];
+
+          const renderAll = () => {
+            renderYearTrend(yearSeries);
+            renderSeverity(severityData);
+            renderMonthly(monthlyData);
+          };
+
+          renderAll();
+          window.addEventListener("resize", renderAll, { passive: true });
+
+          function renderYearTrend(series) {
+            const svg = svgs.year;
+            if (svg.empty()) return;
+
+            const margin = { top: 44, right: 56, bottom: 40, left: 64 };
+            const width = Math.max(svg.node().parentNode.getBoundingClientRect().width, 360);
+            const height = 260;
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            svg.attr("width", width).attr("height", height).style("overflow", "visible");
+            svg.selectAll("*").remove();
+
+            const xScale = d3.scalePoint()
+              .domain(series.map(d => d.year))
+              .range([0, innerWidth])
+              .padding(0.5);
+
+            const maxValue = d3.max(series, d => Math.max(d.crashes, d.serious)) || 0;
+            const yUpper = Math.max(maxValue * 1.1, 1);
+            const yScale = d3.scaleLinear()
+              .domain([0, yUpper])
+              .nice()
+              .range([innerHeight, 0]);
+
+            const chart = svg.append("g")
+              .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            chart.append("line")
+              .attr("class", "boulder-baseline")
+              .attr("x1", 0)
+              .attr("x2", 0)
+              .attr("y1", 0)
+              .attr("y2", innerHeight);
+
+            chart.append("line")
+              .attr("class", "boulder-baseline")
+              .attr("x1", 0)
+              .attr("x2", 0)
+              .attr("y1", 0)
+              .attr("y2", innerHeight);
+
+            chart.append("line")
+              .attr("class", "boulder-baseline")
+              .attr("x1", 0)
+              .attr("x2", 0)
+              .attr("y1", 0)
+              .attr("y2", innerHeight);
+
+            chart.append("line")
+              .attr("class", "boulder-baseline")
+              .attr("x1", 0)
+              .attr("x2", 0)
+              .attr("y1", 0)
+              .attr("y2", innerHeight);
+
+            chart.append("line")
+              .attr("class", "boulder-baseline")
+              .attr("x1", 0)
+              .attr("x2", 0)
+              .attr("y1", 0)
+              .attr("y2", innerHeight);
+
+            const yAxis = d3.axisLeft(yScale)
+              .ticks(5)
+              .tickFormat(d3.format(","))
+              .tickPadding(8);
+            chart.append("g")
+              .attr("class", "axis axis--y")
+              .call(yAxis)
+              .call(g => g.select(".domain").remove())
+              .call(g => g.selectAll(".tick line")
+                .attr("class", "boulder-gridline")
+                .attr("x2", innerWidth))
+              .call(g => g.selectAll(".tick text").attr("class", "boulder-axis-label"));
+
+            chart.append("g")
+              .attr("class", "axis axis--x")
+              .attr("transform", `translate(0,${innerHeight})`)
+              .call(d3.axisBottom(xScale).tickSize(0).tickFormat(d3.format("d")).tickPadding(10))
+              .call(g => g.select(".domain").remove())
+              .call(g => g.selectAll(".tick text").attr("class", "boulder-axis-label"));
+
+            const lineCrashes = d3.line()
+              .x(d => xScale(d.year))
+              .y(d => yScale(d.crashes))
+              .curve(d3.curveMonotoneX);
+
+            const lineSerious = d3.line()
+              .x(d => xScale(d.year))
+              .y(d => yScale(d.serious))
+              .curve(d3.curveMonotoneX);
+
+            chart.append("path")
+              .datum(series)
+              .attr("class", "boulder-line boulder-line--crashes")
+              .attr("d", lineCrashes);
+
+            chart.append("path")
+              .datum(series)
+              .attr("class", "boulder-line boulder-line--serious")
+              .attr("d", lineSerious);
+
+            const crashDots = chart.selectAll(".dot--crashes")
+              .data(series)
+              .enter()
+              .append("circle")
+              .attr("class", "boulder-dot boulder-dot--crashes")
+              .attr("r", 4)
+              .attr("cx", d => xScale(d.year))
+              .attr("cy", d => yScale(d.crashes));
+
+            const seriousDots = chart.selectAll(".dot--serious")
+              .data(series)
+              .enter()
+              .append("circle")
+              .attr("class", "boulder-dot boulder-dot--serious")
+              .attr("r", 4)
+              .attr("cx", d => xScale(d.year))
+              .attr("cy", d => yScale(d.serious));
+
+            crashDots
+              .on("mouseenter", function (event, d) {
+                d3.select(this).attr("r", 6);
+                showTooltip(event, `<strong>${d.year}</strong><br>Crashes: ${numberFormatter(d.crashes)}`);
+              })
+              .on("mousemove", function (event, d) {
+                showTooltip(event, `<strong>${d.year}</strong><br>Crashes: ${numberFormatter(d.crashes)}`);
+              })
+              .on("mouseleave", function () {
+                d3.select(this).attr("r", 4);
+                hideTooltip();
+              });
+
+            seriousDots
+              .on("mouseenter", function (event, d) {
+                d3.select(this).attr("r", 6);
+                showTooltip(event, `<strong>${d.year}</strong><br>Serious injuries: ${numberFormatter(d.serious)}`);
+              })
+              .on("mousemove", function (event, d) {
+                showTooltip(event, `<strong>${d.year}</strong><br>Serious injuries: ${numberFormatter(d.serious)}`);
+              })
+              .on("mouseleave", function () {
+                d3.select(this).attr("r", 4);
+                hideTooltip();
+              });
+
+            const legend = chart.append("g")
+              .attr("class", "boulder-legend")
+              .attr("transform", "translate(0,-24)");
+
+            const legendItems = [
+              { label: "Crashes", className: "boulder-dot--crashes", stroke: "boulder-line--crashes" },
+              { label: "Serious injuries", className: "boulder-dot--serious", stroke: "boulder-line--serious" }
+            ];
+
+            const legendGroup = legend.selectAll("g")
+              .data(legendItems)
+              .enter()
+              .append("g")
+              .attr("transform", (_, i) => `translate(${i * 150},0)`);
+
+            legendGroup.append("line")
+              .attr("class", d => `boulder-line ${d.stroke}`)
+              .attr("x1", 0)
+              .attr("x2", 24)
+              .attr("y1", 6)
+              .attr("y2", 6);
+
+            legendGroup.append("circle")
+              .attr("class", d => `boulder-dot ${d.className}`)
+              .attr("cx", 12)
+              .attr("cy", 6)
+              .attr("r", 4);
+
+            legendGroup.append("text")
+              .attr("x", 32)
+              .attr("y", 9)
+              .text(d => d.label);
+          }
+
+          function renderSeverity(data) {
+            const svg = svgs.severity;
+            if (svg.empty() || !data.length) return;
+
+            const margin = { top: 32, right: 64, bottom: 48, left: 140 };
+            const width = Math.max(svg.node().parentNode.getBoundingClientRect().width, 420);
+            const barHeight = 32;
+            const height = barHeight * data.length + margin.top + margin.bottom;
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            svg.attr("width", width).attr("height", height).style("overflow", "visible");
+            svg.selectAll("*").remove();
+
+            const yScale = d3.scaleBand()
+              .domain(data.map(d => d.axisLabel))
+              .range([0, innerHeight])
+              .padding(0.25);
+
+            const xUpper = Math.max(d3.max(data, d => d.count) || 0, 1);
+            const xScale = d3.scaleLinear()
+              .domain([0, xUpper])
+              .nice()
+              .range([0, innerWidth]);
+
+            const chart = svg.append("g")
+              .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            chart.append("g")
+              .attr("class", "axis axis--y")
+              .call(d3.axisLeft(yScale).tickSize(0).tickPadding(10))
+              .call(g => g.select(".domain").remove())
+              .call(g => g.selectAll("text").attr("class", "boulder-axis-label"));
+
+            chart.append("g")
+              .attr("class", "axis axis--x")
+              .attr("transform", `translate(0,${innerHeight})`)
+              .call(d3.axisBottom(xScale).ticks(4).tickFormat(d3.format(",")).tickPadding(8))
+              .call(g => g.select(".domain").remove())
+              .call(g => g.selectAll(".tick line")
+                .attr("class", "boulder-gridline")
+                .attr("y2", -innerHeight))
+              .call(g => g.selectAll(".tick text").attr("class", "boulder-axis-label"));
+
+            const highlightValue = d3.max(data, d => d.count);
+            const severityBars = chart.selectAll(".severity-bar")
+              .data(data)
+              .enter()
+              .append("rect")
+              .attr("class", d => `severity-bar boulder-mini-bar${d.count === highlightValue ? "" : " boulder-mini-bar--muted"}`)
+              .attr("x", 0)
+              .attr("y", d => yScale(d.axisLabel))
+              .attr("height", yScale.bandwidth())
+              .attr("width", d => xScale(d.count));
+
+            severityBars
+              .on("mouseenter", function (event, d) {
+                d3.select(this).attr("opacity", 0.85);
+                showTooltip(event, `<strong>${d.label}</strong><br>${numberFormatter(d.count)} crashes`);
+              })
+              .on("mousemove", function (event, d) {
+                showTooltip(event, `<strong>${d.label}</strong><br>${numberFormatter(d.count)} crashes`);
+              })
+              .on("mouseleave", function () {
+                d3.select(this).attr("opacity", 1);
+                hideTooltip();
+              });
+
+            chart.selectAll(".severity-label")
+              .data(data)
+              .enter()
+              .append("text")
+              .attr("class", "boulder-axis-label")
+              .attr("x", d => xScale(d.count) + 8)
+              .attr("y", d => yScale(d.axisLabel) + yScale.bandwidth() / 2)
+              .attr("dy", "0.35em")
+              .text(d => numberFormatter(d.count));
+          }
+
+          function renderMonthly(data) {
+            const svg = svgs.month;
+            if (svg.empty() || !data.length) return;
+
+            const margin = { top: 28, right: 36, bottom: 44, left: 80 };
+            const width = Math.max(svg.node().parentNode.getBoundingClientRect().width, 360);
+            const height = 260;
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            svg.attr("width", width).attr("height", height).style("overflow", "visible");
+            svg.selectAll("*").remove();
+
+            const xScale = d3.scaleBand()
+              .domain(data.map(d => d.label))
+              .range([0, innerWidth])
+              .padding(0.2);
+
+            const yUpper = Math.max(d3.max(data, d => d.count) || 0, 1);
+            const yScale = d3.scaleLinear()
+              .domain([0, yUpper])
+              .nice()
+              .range([innerHeight, 0]);
+
+            const chart = svg.append("g")
+              .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            chart.append("g")
+              .attr("class", "axis axis--y")
+              .call(d3.axisLeft(yScale).ticks(5).tickFormat(d3.format(",")).tickPadding(8))
+              .call(g => g.select(".domain").remove())
+              .call(g => g.selectAll(".tick line")
+                .attr("class", "boulder-gridline")
+                .attr("x2", innerWidth))
+              .call(g => g.selectAll(".tick text").attr("class", "boulder-axis-label"));
+
+            chart.append("g")
+              .attr("class", "axis axis--x")
+              .attr("transform", `translate(0,${innerHeight})`)
+              .call(d3.axisBottom(xScale).tickSize(0).tickPadding(10))
+              .call(g => g.select(".domain").remove())
+              .call(g => g.selectAll(".tick text").attr("class", "boulder-axis-label"));
+
+            const monthHighlight = d3.max(data, d => d.count);
+            const monthBars = chart.selectAll(".month-bar")
+              .data(data)
+              .enter()
+              .append("rect")
+              .attr("class", d => `month-bar boulder-month-bar${d.count === monthHighlight ? " boulder-month-bar--highlight" : ""}`)
+              .attr("x", d => xScale(d.label))
+              .attr("y", d => yScale(d.count))
+              .attr("width", xScale.bandwidth())
+              .attr("height", d => innerHeight - yScale(d.count));
+
+            monthBars
+              .on("mouseenter", function (event, d) {
+                d3.select(this).attr("opacity", 0.85);
+                showTooltip(event, `<strong>${d.label}</strong><br>${numberFormatter(d.count)} crashes`);
+              })
+              .on("mousemove", function (event, d) {
+                showTooltip(event, `<strong>${d.label}</strong><br>${numberFormatter(d.count)} crashes`);
+              })
+              .on("mouseleave", function () {
+                d3.select(this).attr("opacity", 1);
+                hideTooltip();
+              });
+          }
         })();
       </script>
     </section>
