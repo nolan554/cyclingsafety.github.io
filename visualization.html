@@ -5,18 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Data visualization page | Boulder Cycling Safety</title>
   <link rel="stylesheet" href="assets/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header class="site-header">
-    <h1>Data visualization page</h1>
-    <nav class="mini-nav" aria-label="Site">
-      <a href="index.html">Home</a>
-      <a href="story.html">Scrollytelling</a>
-      <a href="infrastructure.html">Infrastructure</a>
-      <a href="magnus-white.html">Magnus White</a>
+<body class="bg-slate-50 text-slate-900">
+  <header class="site-header relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/25 via-blue-600/20 to-slate-900/30 opacity-80" aria-hidden="true"></div>
+    <div class="max-w-5xl mx-auto relative z-10 text-left">
+      <p class="uppercase tracking-[0.25em] text-xs md:text-sm text-emerald-200 mb-4">Data assignments</p>
+      <h1 class="text-4xl font-bold text-white">Data visualization page</h1>
+      <p class="tagline text-lg text-slate-100 mt-4 max-w-3xl">Where each interactive lives now that we’ve embedded them into the narrative pages.</p>
+    </div>
+    <nav class="mini-nav mt-8 relative z-10" aria-label="Site">
+      <a href="index.html" class="rounded-full px-4 py-2 hover:bg-white/10">Home</a>
+      <a href="story.html" class="rounded-full px-4 py-2 hover:bg-white/10">Scrollytelling</a>
+      <a href="infrastructure.html" class="rounded-full px-4 py-2 hover:bg-white/10">Infrastructure</a>
+      <a href="magnus-white.html" class="rounded-full px-4 py-2 hover:bg-white/10">Magnus White</a>
     </nav>
   </header>
-  <main class="viz-container">
+  <main class="viz-container max-w-5xl w-full">
     <section class="viz-card">
       <h2>Visualizations relocated</h2>
       <p>We moved our interactive crash visuals into the stories where they are referenced. The intersection hotspot map now lives at the bottom of the <a href="infrastructure.html">Infrastructure</a> page, and the annual, severity, and seasonal charts appear on the <a href="magnus-white.html">Magnus White</a> page.</p>

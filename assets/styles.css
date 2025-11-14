@@ -196,7 +196,7 @@ body {
 /* Story page */
 .story-container {
   display: grid;
-  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 2.5rem;
   max-width: 1100px;
   margin: 0 auto;
@@ -204,36 +204,70 @@ body {
 }
 
 .story-sequence {
-  padding: 40vh 0;
+  padding: 4rem 0 2rem;
 }
 
-.story-figure {
-  position: sticky;
-  top: 1.5rem;
-  align-self: start;
-  background: #181818;
-  color: #f5f5f5;
-  border-radius: 18px;
-  padding: 2.25rem;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-  min-height: 320px;
+.story-intro {
+  margin-bottom: 2rem;
+}
+
+.story-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #0ea5e9;
+}
+
+.story-title {
+  font-size: 2.5rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.story-summary {
+  font-size: 1.1rem;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.story-detail {
+  color: #64748b;
+}
+
+.story-step__media {
+  margin: 0 0 1.25rem;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 1.5rem;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
-.story-figure h2 {
-  margin: 0;
+.story-step__media img {
+  width: 100%;
+  max-width: 360px;
+  max-height: 260px;
+  object-fit: contain;
+  display: block;
+}
+
+.story-step__media figcaption {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #475569;
+  padding: 0.65rem 1rem;
 }
 
 .story-step {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 2rem;
-  margin: 0 0 45vh;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
-  transition: border-left 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+  margin: 0 0 38vh;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
   border-left: 6px solid transparent;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .story-step:last-child {
@@ -241,13 +275,45 @@ body {
 }
 
 .story-step.is-active {
-  border-left-color: #1a1a1a;
-  background: #f2f2f2;
-  transform: translateX(6px);
+  border-left-color: #10b981;
+  background: #f8fafc;
+  transform: translateX(10px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
 }
 
 .story-step h3 {
-  margin-top: 0;
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+  color: #0f172a;
+}
+
+.story-step h4 {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #334155;
+}
+
+.story-step p {
+  margin-bottom: 1rem;
+  color: #475569;
+}
+
+.story-step ol {
+  margin: 0 0 1.25rem 1.25rem;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  color: #475569;
+}
+
+.story-step ol li {
+  padding-left: 0.35rem;
+}
+
+.story-step strong {
+  color: #0f172a;
 }
 
 .story-legend {
@@ -532,8 +598,8 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .story-figure {
-    position: relative;
+  .story-sequence {
+    padding-top: 2rem;
   }
 }
 
@@ -544,20 +610,12 @@ body {
     padding: 1.75rem;
   }
 
-  .sample-bar {
-    grid-template-columns: 80px 1fr 50px;
-  }
-
-  .story-figure {
-    padding: 1.75rem;
-  }
-
   .story-sequence {
-    padding: 16vh 0;
+    padding: 2rem 0 1rem;
   }
 
   .story-step {
-    margin-bottom: 32vh;
+    margin-bottom: 24vh;
   }
 
   .mini-nav {
