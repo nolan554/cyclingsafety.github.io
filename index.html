@@ -5,37 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boulder Cycling Safety | Project Hub</title>
   <link rel="stylesheet" href="assets/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header class="site-header">
-    <h1>Boulder Cycling Safety</h1>
-    <p class="tagline"></p>
-    <nav class="mini-nav" aria-label="Site">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="story.html">Scrollytelling</a>
-      <a href="infrastructure.html">Infrastructure</a>
-      <a href="magnus-white.html">Magnus White</a>
+<body class="bg-slate-50 text-slate-900">
+  <header class="site-header relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/25 via-blue-600/20 to-slate-900/30 opacity-80" aria-hidden="true"></div>
+    <div class="max-w-6xl mx-auto relative z-10 text-center">
+      <div>
+        <p class="uppercase tracking-[0.25em] text-xs md:text-sm text-emerald-200 mb-4">Safer streets start with bold data</p>
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight text-white">Boulder Cycling Safety</h1>
+        <p class="tagline mt-4 text-lg text-slate-100 max-w-2xl mx-auto">
+          Stories, infrastructure reporting, and visual evidence that help Boulder reach zero serious cycling crashes.
+        </p>
+        <div class="flex flex-wrap gap-3 mt-6 justify-center">
+          <a href="story.html" class="inline-flex items-center gap-2 rounded-full bg-white/90 text-slate-900 font-semibold px-5 py-2 text-sm shadow-lg hover:bg-white">
+            Explore scrollytelling
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="infrastructure.html" class="inline-flex items-center gap-2 rounded-full border border-white/60 text-white px-5 py-2 text-sm font-semibold hover:bg-white/10">
+            See infrastructure updates
+          </a>
+        </div>
+      </div>
+    </div>
+    <nav class="mini-nav mt-8 relative z-10" aria-label="Site">
+      <a href="index.html" aria-current="page" class="rounded-full px-4 py-2 bg-white/20">Home</a>
+      <a href="story.html" class="rounded-full px-4 py-2 hover:bg-white/10">Scrollytelling</a>
+      <a href="infrastructure.html" class="rounded-full px-4 py-2 hover:bg-white/10">Infrastructure</a>
+      <a href="magnus-white.html" class="rounded-full px-4 py-2 hover:bg-white/10">Magnus White</a>
     </nav>
   </header>
-  <main class="content">
-    <section class="intro-card">
-      <h1>Our Values</h1>
-      <h3>Sustainability</h3>
-      <p>Sustainability is another value at the core of a commuter’s life. Many cyclists do so in order to save money, be efficient, avoid traffic, and help reduce carbon emissions. Since modes of transport such as bikes, buses, and walking have all been shown to decrease carbon emissions, these values should be preserved when thinking about our transport system. We aim to protect the environment by balancing the infrastructure’s impact on the environment and weighing it against the emissions balance of the rest of Boulder.</p>
-      <h3>Safety</h3>
-      <p>The base of our project is safety. Protecting the lives of all who use our roads, paths, and transportation system is our highest priority. This means that there should be no traffic deaths or debilitating accidents. Pedestrians should be able to walk, drivers should be able to transit normally, and cyclists should be able to ride where they need to without injury. All movement in the city should be safe. To do this, we will promote proper infrastructure, promote safe driving/riding habits, advocate for situational awareness, and partake in safe habits ourselves.</p>
-      <h3>Fairness</h3>
-      <p>Fairness ensures that all road users are considered. Solutions to traffic collisions must balance the needs of drivers, pedestrians, and cyclists, preventing any group from being disproportionately disadvantaged.</p>
-      <h3>Fulfillment</h3>
-      <p>This means access to movement as an expression of freedom, or recreation, or of community. Transportation as a barrier to these values is unacceptable, and we will do everything we can to promote people’s safe, educated, and sustainable transportation.</p>
+  <main class="content max-w-6xl w-full">
+    <section class="intro-card bg-white/90 border border-slate-100 backdrop-blur">
+      <p class="text-sm uppercase tracking-[0.3em] text-emerald-600">Guiding principles</p>
+      <h1 class="text-3xl font-semibold mt-2 mb-6 text-slate-900">Our Values</h1>
+      <div class="grid gap-6">
+        <div>
+          <h3 class="text-xl font-semibold text-slate-800">Sustainability</h3>
+          <p class="leading-relaxed text-slate-600">Sustainability is another value at the core of a commuter’s life. Many cyclists do so in order to save money, be efficient, avoid traffic, and help reduce carbon emissions. Since modes of transport such as bikes, buses, and walking have all been shown to decrease carbon emissions, these values should be preserved when thinking about our transport system. We aim to protect the environment by balancing the infrastructure’s impact on the environment and weighing it against the emissions balance of the rest of Boulder.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-slate-800">Safety</h3>
+          <p class="leading-relaxed text-slate-600">The base of our project is safety. Protecting the lives of all who use our roads, paths, and transportation system is our highest priority. This means that there should be no traffic deaths or debilitating accidents. Pedestrians should be able to walk, drivers should be able to transit normally, and cyclists should be able to ride where they need to without injury. All movement in the city should be safe. To do this, we will promote proper infrastructure, promote safe driving/riding habits, advocate for situational awareness, and partake in safe habits ourselves.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-slate-800">Fairness</h3>
+          <p class="leading-relaxed text-slate-600">Fairness ensures that all road users are considered. Solutions to traffic collisions must balance the needs of drivers, pedestrians, and cyclists, preventing any group from being disproportionately disadvantaged.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-slate-800">Fulfillment</h3>
+          <p class="leading-relaxed text-slate-600">This means access to movement as an expression of freedom, or recreation, or of community. Transportation as a barrier to these values is unacceptable, and we will do everything we can to promote people’s safe, educated, and sustainable transportation.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="intro-card">
-      <h1>More Resources</h1>
+    <section class="intro-card bg-gradient-to-br from-white to-emerald-50 border border-emerald-100">
+      <h1 class="text-3xl font-semibold text-slate-900">More Resources</h1>
+      <p class="text-slate-600 mb-6">Tap into vetted safety research, reporting, and advocacy partners supporting Boulder cyclists.</p>
       <div class="resource-groups">
         <div class="resource-group">
-          <h3>Further Safety Information</h3>
-          <div class="resource-grid">
+          <h3 class="text-xl font-semibold text-slate-800">Further Safety Information</h3>
+          <div class="resource-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
             <a class="resource-link" href="https://bouldercolorado.gov" target="_blank" rel="noreferrer">
               <span class="resource-logo" aria-hidden="true">
                 <img src="https://www.google.com/s2/favicons?domain=bouldercolorado.gov&sz=64" alt="">
@@ -108,8 +138,8 @@
         </div>
 
         <div class="resource-group">
-          <h3>Cyclist Advocacy Groups</h3>
-          <div class="resource-grid">
+          <h3 class="text-xl font-semibold text-slate-800">Cyclist Advocacy Groups</h3>
+          <div class="resource-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
             <a class="resource-link" href="https://www.communitycycles.org" target="_blank" rel="noreferrer">
               <span class="resource-logo" aria-hidden="true">
                 <img src="https://www.google.com/s2/favicons?domain=communitycycles.org&sz=64" alt="">
