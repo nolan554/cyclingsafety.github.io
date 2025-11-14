@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 :root {
   color-scheme: light;
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -250,6 +252,208 @@ body {
   font-size: 0.9rem;
   color: #555;
   margin-top: 0.75rem;
+}
+
+/* Boulder crash data visuals */
+.boulder-chart {
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0;
+  position: relative;
+}
+
+.boulder-chart--embedded {
+  margin-top: 2rem;
+}
+
+.boulder-chart__container {
+  margin-top: 1.75rem;
+  width: 100%;
+}
+
+.boulder-chart__insight {
+  color: #4b5563;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 1rem;
+}
+
+#boulder-bar-chart {
+  height: 400px;
+  width: 100%;
+}
+
+.axis-label,
+.data-label {
+  fill: #334155;
+  font-size: 0.8rem;
+}
+
+.axis path,
+.axis line {
+  stroke: #cbd5e1;
+}
+
+.y-axis .tick text {
+  fill: #334155;
+  font-weight: 500;
+}
+
+.x-axis .tick text {
+  fill: #64748b;
+}
+
+.bar-default {
+  fill: #94a3b8;
+}
+
+.bar-highlight {
+  fill: #2563eb;
+}
+
+.bar.is-hovered {
+  opacity: 0.82;
+}
+
+.boulder-chart__tooltip {
+  background-color: #1e293b;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+  color: #ffffff;
+  font-size: 0.85rem;
+  opacity: 0;
+  padding: 0.6rem 0.85rem;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.boulder-dashboard {
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  margin: 3rem auto 0;
+  width: min(960px, 100%);
+}
+
+.boulder-dashboard__title {
+  color: #1f2937;
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.boulder-dashboard__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  align-items: stretch;
+}
+
+.boulder-mini-card {
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+}
+
+.boulder-mini-card__title {
+  color: #1f2937;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.boulder-mini-card__meta {
+  color: #6b7280;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0 0 0.75rem;
+}
+
+.boulder-mini-card svg {
+  display: block;
+  margin-top: 1.25rem;
+  width: 100%;
+  overflow: visible;
+}
+
+.boulder-dashboard__footnote {
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+.boulder-line {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: 2.5;
+}
+
+.boulder-line--crashes {
+  stroke: #2563eb;
+}
+
+.boulder-line--serious {
+  stroke: #94a3b8;
+}
+
+.boulder-dot {
+  stroke: #ffffff;
+  stroke-width: 1.5;
+}
+
+.boulder-dot--crashes {
+  fill: #2563eb;
+}
+
+.boulder-dot--serious {
+  fill: #94a3b8;
+}
+
+.boulder-legend text {
+  fill: #475569;
+  font-size: 0.78rem;
+}
+
+.boulder-gridline {
+  stroke: #e2e8f0;
+  stroke-width: 1;
+}
+
+.boulder-mini-bar {
+  fill: #2563eb;
+}
+
+.boulder-mini-bar--muted {
+  fill: #94a3b8;
+}
+
+.boulder-month-bar {
+  fill: #94a3b8;
+}
+
+.boulder-month-bar--highlight {
+  fill: #2563eb;
+}
+
+.boulder-baseline {
+  stroke: #cbd5e1;
+  stroke-width: 1;
+}
+
+.boulder-axis-label {
+  fill: #475569;
+  font-size: 0.78rem;
 }
 
 /* Responsive layouts */

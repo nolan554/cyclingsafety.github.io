@@ -11,7 +11,7 @@
     <h1>Infrastructure page</h1>
     <nav class="mini-nav" aria-label="Site">
       <a href="index.html">Home</a>
-      <a href="visualization.html">Data visualization</a>
+      <a href="story.html">Scrollytelling</a>
       <a href="infrastructure.html" aria-current="page">Infrastructure</a>
       <a href="magnus-white.html">Magnus White</a>
     </nav>
@@ -24,8 +24,155 @@
 	    <p>However, the City of Boulder has not given up on the idea of adding a protected bike lane to Folsom Street. On November 29, 2024, Boulder Transportation Connections published an article announcing a new project that planned to increase cyclist safety on Folsom St. The first phase of the project in 2024 spent a lot of resources learning about what needs improvement in the community. Interestingly, a large portion of the webpage is dedicated to explaining how this project is different from the previous Folsom Street Living Lab experiment. While this project has not begun development, the city is in the process of deciding on a design.</p>
 	    <p>Renovations for Iris Avenue are also planned. The City has already chosen a design for this project, which will add two-way protected bike lanes along the corridor between Broadway and 28th Street. In order to avoid the same pushback as the original Folsom Street renovation project, the project website contains detailed information about how the project will affect travel time for drivers. Unlike the original Folsom Street proposal, the impacts on travel time for drivers appear minor. Although construction has been approved, the start date is unconfirmed.</p>
 	    <p>The last road being improved by the city is Baseline Road. This project has been split into two phases. The first phase was completed in 2023, and the second phase is planned to be completed in 2026. The first phase allowed the city to narrow the car lanes and add the first iteration of a protected bike lane. Construction for phase 2 is planned to start in the Summer/Fall of 2025.</p>
-	
+
+    </section>
+
+    <section class="card viz-card" aria-labelledby="infrastructure-hotspots-heading">
+      <div class="boulder-dashboard" aria-labelledby="infrastructure-hotspots-heading">
+        <h3 id="infrastructure-hotspots-heading" class="boulder-dashboard__title">Intersection crash hotspots</h3>
+        <div class="boulder-chart boulder-chart--embedded">
+          <p class="boulder-mini-card__meta">Intersections account for 53.5% of the 774 bicycle crashes recorded since 2017.</p>
+          <div class="boulder-chart__container">
+            <svg id="boulder-bar-chart" role="img" aria-label="Bar chart showing the frequency of Boulder cycling crashes by location"></svg>
+          </div>
+          <div id="boulder-chart-tooltip" class="boulder-chart__tooltip" role="presentation"></div>
+        </div>
+        <p class="boulder-dashboard__footnote">Data source: City of Boulder Crash Dataset (2017&ndash;2024). Bicycle-involved crashes only.</p>
+      </div>
+    </section>
+
+    <section class="card viz-card" aria-labelledby="heatmap-heading">
+      <h3 id="heatmap-heading" class="boulder-dashboard__title">Crash density heatmap</h3>
+      <p class="boulder-mini-card__meta">Static heatmap highlighting corridors with the heaviest concentrations of bicycle crashes.</p>
+      <figure>
+        <img src="assets/heatmap.svg" alt="Heatmap of Boulder bicycle crash density" style="width:100%;height:auto;">
+        <figcaption class="boulder-dashboard__footnote">Source: City of Boulder Crash Dataset (2017&ndash;2024).</figcaption>
+      </figure>
     </section>
   </main>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    (function () {
+      const data = [
+        { axisLabel: "Intersection", description: "Crash occurred at an intersection", frequency: 414, highlight: true },
+        { axisLabel: "Driveway", description: "Driveway access related", frequency: 127 },
+        { axisLabel: "Non-intersection", description: "Crash away from an intersection", frequency: 105 },
+        { axisLabel: "Intersection related", description: "Approaching or leaving an intersection", frequency: 67 },
+        { axisLabel: "Parking lot", description: "Crash inside a parking lot", frequency: 30 },
+        { axisLabel: "Minor road", description: "Minor or other road description", frequency: 14 },
+        { axisLabel: "Mid-block crossing", description: "Crash in a mid-block crosswalk", frequency: 9 },
+        { axisLabel: "Shared path", description: "Shared-use path or trail", frequency: 8 }
+      ];
+
+      const formatNumber = d3.format(",");
+      const container = d3.select(".boulder-chart__container");
+      const svg = d3.select("#boulder-bar-chart");
+      const tooltip = d3.select("#boulder-chart-tooltip");
+      const margin = { top: 24, right: 60, bottom: 56, left: 140 };
+      const totalHeight = 400;
+      const innerHeight = totalHeight - margin.top - margin.bottom;
+
+      function render() {
+        const containerWidth = Math.max(container.node().getBoundingClientRect().width, 320);
+        const innerWidth = containerWidth - margin.left - margin.right;
+
+        svg.attr("width", containerWidth);
+        svg.attr("height", totalHeight);
+        svg.selectAll("*").remove();
+
+        const chartArea = svg
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        chartArea.append("line")
+          .attr("class", "boulder-baseline")
+          .attr("x1", 0)
+          .attr("x2", innerWidth)
+          .attr("y1", innerHeight)
+          .attr("y2", innerHeight);
+
+        const xScale = d3.scaleLinear()
+          .domain([0, d3.max(data, d => d.frequency) * 1.05])
+          .range([0, innerWidth]);
+
+        const yScale = d3.scaleBand()
+          .domain(data.map(d => d.axisLabel))
+          .range([0, innerHeight])
+          .padding(0.2);
+
+        chartArea
+          .append("g")
+          .attr("class", "axis y-axis")
+          .call(d3.axisLeft(yScale).tickSize(0).tickPadding(12))
+          .call(g => g.select(".domain").remove());
+
+        chartArea
+          .append("g")
+          .attr("class", "axis x-axis")
+          .attr("transform", `translate(0,${innerHeight})`)
+          .call(d3.axisBottom(xScale).ticks(5).tickSizeOuter(0));
+
+        chartArea
+          .append("text")
+          .attr("class", "axis-label")
+          .attr("text-anchor", "middle")
+          .attr("x", innerWidth / 2)
+          .attr("y", innerHeight + margin.bottom - 18)
+          .text("Frequency of Crashes");
+
+        const bars = chartArea
+          .selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", d => `bar ${d.highlight ? "bar-highlight" : "bar-default"}`)
+          .attr("x", 0)
+          .attr("y", d => yScale(d.axisLabel))
+          .attr("height", yScale.bandwidth())
+          .attr("width", 0);
+
+        bars
+          .transition()
+          .duration(800)
+          .delay((_, i) => i * 50)
+          .attr("width", d => xScale(d.frequency));
+
+        chartArea
+          .selectAll(".data-label")
+          .data(data)
+          .enter()
+          .append("text")
+          .attr("class", "data-label")
+          .attr("x", d => xScale(d.frequency) + 10)
+          .attr("y", d => yScale(d.axisLabel) + yScale.bandwidth() / 2)
+          .attr("dy", "0.35em")
+          .attr("opacity", 0)
+          .text(d => formatNumber(d.frequency))
+          .transition()
+          .duration(800)
+          .delay((_, i) => i * 50 + 200)
+          .attr("opacity", 1);
+
+        bars
+          .on("mouseover", function () {
+            d3.select(this).classed("is-hovered", true);
+            tooltip.style("opacity", 1);
+          })
+          .on("mousemove", function (event, d) {
+            tooltip
+              .html(`<strong>${d.axisLabel}</strong><br>${d.description}<br>${formatNumber(d.frequency)} crashes`)
+              .style("left", `${event.clientX + 16}px`)
+              .style("top", `${event.clientY - 10}px`);
+          })
+          .on("mouseleave", function () {
+            d3.select(this).classed("is-hovered", false);
+            tooltip.style("opacity", 0);
+          });
+      }
+
+      render();
+      window.addEventListener("resize", render);
+    })();
+  </script>
 </body>
 </html>
