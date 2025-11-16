@@ -425,7 +425,7 @@ body {
 
 .axis-label,
 .data-label {
-  fill: #334155;
+  fill: #0f172a;
   font-size: 0.8rem;
 }
 
@@ -435,20 +435,20 @@ body {
 }
 
 .y-axis .tick text {
-  fill: #334155;
+  fill: #0f172a;
   font-weight: 500;
 }
 
 .x-axis .tick text {
-  fill: #64748b;
+  fill: #334155;
 }
 
 .bar-default {
-  fill: #94a3b8;
+  fill: #bae6fd;
 }
 
 .bar-highlight {
-  fill: #2563eb;
+  fill: #10b981;
 }
 
 .bar.is-hovered {
@@ -456,7 +456,7 @@ body {
 }
 
 .boulder-chart__tooltip {
-  background-color: #1e293b;
+  background-color: #0f172a;
   border-radius: 6px;
   box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
   color: #ffffff;
@@ -476,7 +476,7 @@ body {
 }
 
 .boulder-dashboard__title {
-  color: #1f2937;
+  color: #0f172a;
   font-size: 1.45rem;
   font-weight: 700;
   margin: 0;
@@ -501,14 +501,14 @@ body {
 }
 
 .boulder-mini-card__title {
-  color: #1f2937;
+  color: #0f172a;
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0 0 0.25rem;
 }
 
 .boulder-mini-card__meta {
-  color: #6b7280;
+  color: #475569;
   font-size: 0.85rem;
   line-height: 1.5;
   margin: 0 0 0.75rem;
@@ -536,11 +536,11 @@ body {
 }
 
 .boulder-line--crashes {
-  stroke: #2563eb;
+  stroke: #0ea5e9;
 }
 
 .boulder-line--serious {
-  stroke: #94a3b8;
+  stroke: #34d399;
 }
 
 .boulder-dot {
@@ -549,11 +549,11 @@ body {
 }
 
 .boulder-dot--crashes {
-  fill: #2563eb;
+  fill: #0ea5e9;
 }
 
 .boulder-dot--serious {
-  fill: #94a3b8;
+  fill: #34d399;
 }
 
 .boulder-legend text {
@@ -567,19 +567,19 @@ body {
 }
 
 .boulder-mini-bar {
-  fill: #2563eb;
+  fill: #10b981;
 }
 
 .boulder-mini-bar--muted {
-  fill: #94a3b8;
+  fill: #bae6fd;
 }
 
 .boulder-month-bar {
-  fill: #94a3b8;
+  fill: #c7d2fe;
 }
 
 .boulder-month-bar--highlight {
-  fill: #2563eb;
+  fill: #0ea5e9;
 }
 
 .boulder-baseline {
@@ -588,7 +588,7 @@ body {
 }
 
 .boulder-axis-label {
-  fill: #475569;
+  fill: #0f172a;
   font-size: 0.78rem;
 }
 
