@@ -115,6 +115,12 @@ body {
   color: #5f6368;
 }
 
+/* Infrastructure page specific formatting */
+.infra-content p,
+.magnus-content p {
+  text-indent: 0;
+}
+
 .nav-links {
   display: grid;
   gap: 1.5rem;
@@ -141,6 +147,21 @@ body {
 .nav-card h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
+}
+
+/* Global headings inside cards */
+.card h1 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.card h3 {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .card {
