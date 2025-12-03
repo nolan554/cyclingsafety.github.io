@@ -209,6 +209,30 @@
             hideTooltip();
           });
 
+        // Add a vertical interaction band per year so both series show tooltips easily
+        const bandWidth = Math.min(80, innerWidth / series.length);
+        chart.append("g")
+          .selectAll("rect")
+          .data(series)
+          .enter()
+          .append("rect")
+          .attr("x", d => (xScale(d.year) || 0) - bandWidth / 2)
+          .attr("width", bandWidth)
+          .attr("y", -margin.top)
+          .attr("height", innerHeight + margin.top + margin.bottom)
+          .attr("fill", "transparent")
+          .style("pointer-events", "all")
+          .on("mousemove", function (event, d) {
+            crashDots.attr("r", c => c === d ? 6 : 4);
+            seriousDots.attr("r", c => c === d ? 6 : 4);
+            showTooltip(event, `<strong>${d.year}</strong><br>Crashes: ${numberFormatter(d.crashes)}<br>Serious injuries: ${numberFormatter(d.serious)}`);
+          })
+          .on("mouseleave", function () {
+            crashDots.attr("r", 4);
+            seriousDots.attr("r", 4);
+            hideTooltip();
+          });
+
         const legend = chart.append("g")
           .attr("class", "boulder-legend")
           .attr("transform", "translate(0,-24)");
