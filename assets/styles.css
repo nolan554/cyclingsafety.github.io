@@ -15,6 +15,31 @@ body {
   flex-direction: column;
 }
 
+.skip-link {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.75rem;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.skip-link:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -4px);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+}
+
 .site-header {
   background: #1a1a1a;
   color: #f5f5f5;
@@ -205,6 +230,11 @@ body {
 .mini-nav a:hover,
 .mini-nav a:focus {
   border-bottom-color: #f5f5f5;
+}
+
+.mini-nav a:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 4px;
 }
 
 .mini-nav a[aria-current="page"] {
